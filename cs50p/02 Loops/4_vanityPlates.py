@@ -83,5 +83,80 @@ Invalid
 Run your program with python plates.py. Type OUTATIME and press Enter. 
 Your program should output
 Invalid
-
 """
+
+
+def main():
+    plate = input("Plate: ")
+
+    if is_valid(plate):
+        print("Valid")
+    else:
+        print("Invalid")
+
+
+def is_valid(plate):
+    print("right lenght: ", is_right_lenght(plate))
+    print("begin with 2 letters: ", is_begin_2letters(plate))
+    print("the numbers is only at the end: ", is_numbers_end(plate))
+    print("is the first number not a zero: ", is_first_number_not_zero(plate))
+    print("è alfanumerica: ", is_alpha_or_number(plate))
+
+    if (
+        is_right_lenght(plate)
+        and is_begin_2letters(plate)
+        and is_numbers_end(plate)
+        and is_first_number_not_zero(plate)
+        and is_alpha_or_number(plate)
+    ):
+        return True
+
+
+def is_right_lenght(s):
+    # maximum of 6 characters (letters or numbers) and a minimum of 2 characters
+    if len(s) > 1 and len(s) < 7:
+        return True
+    else:
+        return False
+
+
+def is_begin_2letters(s):
+    # starts with 2 letters
+    if s[0:2].isalpha():
+        return True
+
+
+def is_numbers_end(s):
+    # Numbers cannot be used in the middle of a plate; they must come at the end.
+    # For example, AAA222 would be an acceptable … vanity plate;
+    # AAA22A would not be acceptable.
+    lenght_plate = len(s)
+    number_digit_in_plate = 0
+
+    for c in s:
+        if c.isdigit():
+            number_digit_in_plate = number_digit_in_plate + 1
+
+    if (
+        number_digit_in_plate == 0
+        or s[len(s) - number_digit_in_plate : len(s)].isdigit()
+    ):
+        return True
+
+
+def is_first_number_not_zero(s):
+    # The first number used cannot be a ‘0’.”
+    for c in s:
+        if c.isdigit():
+            if c == "0":
+                return False
+    return True
+
+
+def is_alpha_or_number(s):
+    # “No periods, spaces, or punctuation marks are allowed.”
+    if s.isalnum():
+        return True
+
+
+main()
